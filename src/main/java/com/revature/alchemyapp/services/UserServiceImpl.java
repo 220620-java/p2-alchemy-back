@@ -76,13 +76,19 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<Shelf> viewUserBooks(User user) {
-		// TODO Auto-generated method stub
-		return null;
+		return shelfRepo.findByUser(user);
 	}
 
 	@Override
 	public User updateUser(User user) {
-		// TODO Auto-generated method stub
+		if (userRepo.findById(user.getId()).isPresent()) {
+			userRepo.save(user);
+			
+			Optional<User> userOpt = userRepo.findById(user.getId());
+			if (userOpt.isPresent()) {
+				return userOpt.get();
+			}
+		}
 		return null;
 	}
 

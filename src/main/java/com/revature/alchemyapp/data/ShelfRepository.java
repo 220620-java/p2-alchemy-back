@@ -10,6 +10,6 @@ import com.revature.alchemyapp.models.User;
 
 @Repository
 public interface ShelfRepository extends JpaRepository<Shelf, Integer> {
-	public List<Shelf> findByUserId(User user);
+	public List<Shelf> findByUser(User user);
 	public List<Shelf> findByBookISBN(String bookISBN);
 }
