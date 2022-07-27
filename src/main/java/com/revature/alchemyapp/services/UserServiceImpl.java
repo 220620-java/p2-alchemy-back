@@ -70,13 +70,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<Category> viewShelfCategories() {
+	public List<Category> getCategories() {
 		return categoryRepo.findAll();
 	}
 
 	@Override
-	public List<Shelf> viewUserBooks(User user) {
+	public List<Shelf> getShelfByUser(User user) {
 		return shelfRepo.findByUser(user);
+	}
+	
+	@Override
+	public List<Shelf> getShelfByUserAndCategory(User user, Category category) {
+		return shelfRepo.findByUserAndCategory(user, category);	
 	}
 
 	@Override
