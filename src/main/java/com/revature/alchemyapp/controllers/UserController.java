@@ -1,4 +1,5 @@
-package com.revature.alchemyapp.controllers;
+
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,19 +12,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.alchemyapp.exceptions.UsernameAlreadyExistsException;
+import com.revature.alchemyapp.models.Category;
+import com.revature.alchemyapp.models.Shelf;
 import com.revature.alchemyapp.models.User;
 import com.revature.alchemyapp.services.UserService;
+import com.revature.alchemyapp.services.UserServiceImpl;
+import com.revature.alchemyapp.data.UserRepository;
 
 @RestController
 @RequestMapping(path = "/users")
 public class UserController {
+	private static final List<Shelf> Shelf = null;
 	private UserService userServ;
+	private UserServiceImpl userImpl;
+	private UserRepository userRepository;
 	
-	public UserController(UserService userServ) {
+	public UserController(UserService userServ, UserRepository userRepository) {
 		this.userServ = userServ;
+		this.userRepository = userRepository;
 	}
 	
-	@GetMapping(path = "/{id}")
+	@GetMapping(path = "/{username}")
 	public ResponseEntity<User> getUserById(@PathVariable("id") Integer userId) {
 		User user = userServ.getUser(userId);
 		if (user != null) {
@@ -43,8 +52,36 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(user);
 	}
 	
+	
+	
+	
+	@GetMapping(path = "/{username}")
+	public ResponseEntity<List<Category>> viewShelfCatagories(@PathVariable("username")String username) {
+		User user = userRepository.findByUsername(username);
+		if (user != null) {
+		    List<Category> selves = user.getCategories();
+		    if (selves != null) {
+		    	return ResponseEntity.ok(selves);
+		    }
+	    }
+		return ResponseEntity.notFound().build();	
+	}
+	
+
+	@GetMapping(path = "/{username}")
+	public ResponseEntity<List<Shelf>> viewUserBooks(@PathVariable("username")String username) {
+		User user = userRepository.findByUsername(username);
+		if (user != null) {
+		    List<Shelf> selves = user.getShelves();
+		    if (selves != null) {
+		    	return ResponseEntity.ok(selves);
+		    }
+	    }
+		return ResponseEntity.notFound().build();	
+	}
+
 	@PutMapping(path = "/{id}")
-	public ResponseEntity<User> updateUser(@RequestBody User user, @PathVariable Integer id) {
+	public ResponseEntity<User> updateUser(@RequestBody User user, @PathVariable("") Integer id) {
 		if (user.getId() == id) {
 			user = userServ.updateUser(user);
 			if (user != null) {
@@ -55,5 +92,33 @@ public class UserController {
 		}
 		return ResponseEntity.status(HttpStatus.CONFLICT).build();
 	}
+	//error started here 
+
+
+	
+	
+	
+	
+	
+	
+	
+	/* 
+	 * @Override
+	public List<Category> viewShelfCategories() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Shelf> viewUserBooks(User user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	 * 
+	 * 
+	 * 
+	 * */
+	
+	 */
 
 }
