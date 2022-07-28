@@ -15,18 +15,23 @@ public class Category {
 	private int id;
 	@Column(name="category_name")
 	private String categoryName;
+	
+	//------------------------- getters & setters -------------------------
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
+	//--------------------------------------------------
 	public String getCategoryName() {
 		return categoryName;
 	}
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
+	
+	//------------------------- methods -------------------------
 	@Override
 	public int hashCode() {
 		return Objects.hash(categoryName, id);

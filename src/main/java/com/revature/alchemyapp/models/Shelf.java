@@ -21,37 +21,45 @@ public class Shelf {
 	@ManyToOne
 	@JoinColumn(name="category_id")
 	private int category;
-	
+
+	//------------------------- constructors -------------------------
 	public Shelf(int id, int user, String bookISBN, int category) {
 		this.id = id;
 		this.user = user;
 		this.bookISBN = bookISBN;
 		this.category = category;
 	}
+	
+	//------------------------- getters & setters -------------------------
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
+	//--------------------------------------------------
 	public int getUser() {
 		return user;
 	}
 	public void setUser(int user) {
 		this.user = user;
 	}
+	//--------------------------------------------------
 	public String getBookISBN() {
 		return bookISBN;
 	}
 	public void setBookISBN(String bookISBN) {
 		this.bookISBN = bookISBN;
 	}
+	//--------------------------------------------------
 	public int getCategory() {
 		return category;
 	}
 	public void setCategory(int category) {
 		this.category = category;
 	}
+
+	//------------------------- methods -------------------------
 	@Override
 	public int hashCode() {
 		return Objects.hash(bookISBN, category, id, user);
