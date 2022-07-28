@@ -12,8 +12,9 @@ public interface UserService {
 	public User logIn(String username, String password);
 	public User getUser(int id);
 	public User addBook(String bookISBN, User user, int category);
-	public List<Category> viewShelfCategories();
-	public List<Shelf> viewUserBooks(User user);
+	public List<Category> getCategories();
+	public List<Shelf> getShelfByUser(User user);
+	public List<Shelf> getShelfByUserAndCategory(User user, Category category);
 	public User updateUser(User user);
 	
 }

@@ -7,5 +7,5 @@ import com.revature.alchemyapp.models.Shelf;
 
 public interface AdminService {
 	public List<Shelf> viewAllShelves();
-	public Category editCategory(Category category);
+	public Category updateCategory(Category category);
 }
