@@ -2,6 +2,7 @@ package com.revature.alchemyapp.models;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,12 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-
-	
-	
-	
-
 @Entity // Tells the ORM that this class exists in the database
 @Table(name="admin") // Explicitly tells the ORM the name of the corresponding table in the database if it is different.
 public class Admin {
@@ -26,10 +21,24 @@ public class Admin {
 	@Column(name="passwrd") // Does the same thing as @Table but with columns
 	private String password;
 	@Column(name="first_name")
+	private String first_name;
+	
 	@JoinColumn(name="admin_id")
-	private List<Shelf> shelves;
-	private List<Category> categories;
 	public int getId() {
 		return id;
 	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getPassword() {
+		return password;
+	}
+	
+}
 

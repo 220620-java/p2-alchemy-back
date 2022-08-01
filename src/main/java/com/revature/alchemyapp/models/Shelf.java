@@ -11,18 +11,24 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Shelf {
+	public void setUser(User user) {
+		this.user = user;
+	}
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	@ManyToOne
 	@JoinColumn(name="user_id")
-	private int user;
+	private User user;
 	private String bookISBN;
 	@ManyToOne
 	@JoinColumn(name="category_id")
-	private int category;
+	private Category category;
 	
-	public Shelf(int id, int user, String bookISBN, int category) {
+	public Shelf(int id, User user, String bookISBN, Category category) {
 		this.id = id;
 		this.user = user;
 		this.bookISBN = bookISBN;
@@ -34,23 +40,11 @@ public class Shelf {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getUser() {
-		return user;
-	}
-	public void setUser(int user) {
-		this.user = user;
-	}
 	public String getBookISBN() {
 		return bookISBN;
 	}
 	public void setBookISBN(String bookISBN) {
 		this.bookISBN = bookISBN;
-	}
-	public int getCategory() {
-		return category;
-	}
-	public void setCategory(int category) {
-		this.category = category;
 	}
 	@Override
 	public int hashCode() {

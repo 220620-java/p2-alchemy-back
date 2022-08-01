@@ -1,6 +1,5 @@
-
+package com.revature.alchemyapp.controllers;
 import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +16,7 @@ import com.revature.alchemyapp.models.Shelf;
 import com.revature.alchemyapp.models.User;
 import com.revature.alchemyapp.services.UserService;
 import com.revature.alchemyapp.services.UserServiceImpl;
+import com.revature.alchemyapp.data.CategoryRepository;
 import com.revature.alchemyapp.data.UserRepository;
 
 @RestController
@@ -26,13 +26,15 @@ public class UserController {
 	private UserService userServ;
 	private UserServiceImpl userImpl;
 	private UserRepository userRepository;
+	private CategoryRepository categoryRepo;
 	
-	public UserController(UserService userServ, UserRepository userRepository) {
+	public UserController(UserService userServ, UserRepository userRepository,CategoryRepository categoryRepo ) {
 		this.userServ = userServ;
 		this.userRepository = userRepository;
+		this.
 	}
 	
-	@GetMapping(path = "/{username}")
+	@GetMapping(path = "/{id}")
 	public ResponseEntity<User> getUserById(@PathVariable("id") Integer userId) {
 		User user = userServ.getUser(userId);
 		if (user != null) {
@@ -55,11 +57,11 @@ public class UserController {
 	
 	
 	
-	@GetMapping(path = "/{username}")
+	@GetMapping(path = "/{username}/categories")
 	public ResponseEntity<List<Category>> viewShelfCatagories(@PathVariable("username")String username) {
 		User user = userRepository.findByUsername(username);
 		if (user != null) {
-		    List<Category> selves = user.getCategories();
+		    List<Category> selves = .getCategories();
 		    if (selves != null) {
 		    	return ResponseEntity.ok(selves);
 		    }
@@ -68,8 +70,8 @@ public class UserController {
 	}
 	
 
-	@GetMapping(path = "/{username}")
-	public ResponseEntity<List<Shelf>> viewUserBooks(@PathVariable("username")String username) {
+	@GetMapping(path = "/{username}/shelves")
+	public ResponseEntity<List<Shelf>> viewUserShelves(@PathVariable("username")String username) {
 		User user = userRepository.findByUsername(username);
 		if (user != null) {
 		    List<Shelf> selves = user.getShelves();
@@ -118,7 +120,5 @@ public class UserController {
 	 * 
 	 * 
 	 * */
-	
-	 */
 
 }
