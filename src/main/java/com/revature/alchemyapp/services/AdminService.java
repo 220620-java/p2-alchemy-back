@@ -8,4 +8,6 @@ import com.revature.alchemyapp.models.Shelf;
 public interface AdminService {
 	public List<Shelf> viewAllShelves();
 	public Category updateCategory(Category category);
+	List<Category> getAllCategories();
+	
 }

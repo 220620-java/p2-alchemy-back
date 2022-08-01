@@ -10,11 +10,13 @@ import com.revature.alchemyapp.data.ShelfRepository;
 import com.revature.alchemyapp.data.UserRepository;
 import com.revature.alchemyapp.models.Category;
 import com.revature.alchemyapp.models.Shelf;
+import com.revature.alchemyapp.models.Admin;
 import com.revature.alchemyapp.models.User;
+
 
 @Service
 public class AdminServiceImpl implements AdminService {
-	private UserRepository userRepo;
+	private UserRepository adminRepo;
 	private ShelfRepository shelfRepo;
 	private CategoryRepository categoryRepo;
 
@@ -23,6 +25,10 @@ public class AdminServiceImpl implements AdminService {
 		return shelfRepo.findAll();
 	}
 
+	@Override
+	public List<Category> getAllCategories() {
+		return categoryRepo.findAll();
+	}
 	@Override
 	public Category updateCategory(Category category) {
 		if (categoryRepo.findById(category.getId()).isPresent()) {

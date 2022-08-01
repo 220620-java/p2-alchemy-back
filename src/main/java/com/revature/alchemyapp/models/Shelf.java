@@ -11,19 +11,31 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Shelf {
+	public void setUser(User user) {
+		this.user = user;
+	}
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	@ManyToOne
 	@JoinColumn(name="user_id")
-	private int user;
+	private User user;
 	private String bookISBN;
 	@ManyToOne
 	@JoinColumn(name="category_id")
+<<<<<<< HEAD
 	private int category;
 
 	//------------------------- constructors -------------------------
 	public Shelf(int id, int user, String bookISBN, int category) {
+=======
+	private Category category;
+	
+	public Shelf(int id, User user, String bookISBN, Category category) {
+>>>>>>> cb5589ef36b8cf9110204114f3ea93fa694c0fd1
 		this.id = id;
 		this.user = user;
 		this.bookISBN = bookISBN;
@@ -37,6 +49,7 @@ public class Shelf {
 	public void setId(int id) {
 		this.id = id;
 	}
+<<<<<<< HEAD
 	//--------------------------------------------------
 	public int getUser() {
 		return user;
@@ -45,12 +58,15 @@ public class Shelf {
 		this.user = user;
 	}
 	//--------------------------------------------------
+=======
+>>>>>>> cb5589ef36b8cf9110204114f3ea93fa694c0fd1
 	public String getBookISBN() {
 		return bookISBN;
 	}
 	public void setBookISBN(String bookISBN) {
 		this.bookISBN = bookISBN;
 	}
+<<<<<<< HEAD
 	//--------------------------------------------------
 	public int getCategory() {
 		return category;
@@ -60,6 +76,8 @@ public class Shelf {
 	}
 
 	//------------------------- methods -------------------------
+=======
+>>>>>>> cb5589ef36b8cf9110204114f3ea93fa694c0fd1
 	@Override
 	public int hashCode() {
 		return Objects.hash(bookISBN, category, id, user);
