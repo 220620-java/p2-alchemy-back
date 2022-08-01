@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class LoggingAspect {
-	@Around("allPetApp()")
+	@Around("allBookSearch()")
 	public Object logAdvice(ProceedingJoinPoint joinpoint) throws Throwable {
 		// getting the class that the joinpoint is part of so that the logger matches
 		Class joinPointClass = joinpoint.getTarget().getClass();
@@ -43,6 +43,6 @@ public class LoggingAspect {
 	
 	// in order to make a reusable pointcut expression,
 	// we can use a hook method (method with an empty body used to hold annotations)
-	@Pointcut("execution(* com.revature.petapp..*(..) )")
-	public void allPetApp() {}
+	@Pointcut("execution(* com.revature.bookSearch..*(..) )")
+	public void allBookSearch() {}
 }
