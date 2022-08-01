@@ -11,7 +11,7 @@ public interface UserService {
 	public User registerUser(User user) throws UsernameAlreadyExistsException;
 	public User logIn(String username, String password);
 	public User getUser(int id);
-	public User addBook(String bookISBN, User user, int category);
+	public User addBook(String bookISBN, User user, Category category);
 	public List<Category> getCategories();
 	public List<Shelf> getShelfByUser(User user);
 	public List<Shelf> getShelfByUserAndCategory(User user, Category category);

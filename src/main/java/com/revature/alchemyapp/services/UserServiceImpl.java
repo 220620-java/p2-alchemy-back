@@ -55,11 +55,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User addBook(String bookISBN, User user, int category) {
+	public User addBook(String bookISBN, User user, Category category) {
 		if (user == null) {
 			return null;
 		} 
-		Shelf shelf = new Shelf(0, user.getId(), bookISBN, category);
+		Shelf shelf = new Shelf(0, user, bookISBN, category);
 		List<Shelf> shelves = user.getShelves();
 		shelves.add(shelf);
 		user.setShelves(shelves);

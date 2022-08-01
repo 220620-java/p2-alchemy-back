@@ -28,10 +28,10 @@ public class UserController {
 	private UserRepository userRepository;
 	private CategoryRepository categoryRepo;
 	
-	public UserController(UserService userServ, UserRepository userRepository,CategoryRepository categoryRepo ) {
+	public UserController(UserService userServ, UserRepository userRepository, CategoryRepository categoryRepo ) {
 		this.userServ = userServ;
 		this.userRepository = userRepository;
-		this.
+		this.categoryRepo = categoryRepo;
 	}
 	
 	@GetMapping(path = "/{id}")
@@ -61,7 +61,7 @@ public class UserController {
 	public ResponseEntity<List<Category>> viewShelfCatagories(@PathVariable("username")String username) {
 		User user = userRepository.findByUsername(username);
 		if (user != null) {
-		    List<Category> selves = .getCategories();
+		    List<Category> selves = categoryRepo.findAll();
 		    if (selves != null) {
 		    	return ResponseEntity.ok(selves);
 		    }
