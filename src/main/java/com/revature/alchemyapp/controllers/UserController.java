@@ -25,12 +25,18 @@ public class UserController {
 	private static final List<Shelf> Shelf = null;
 	private UserService userServ;
 	private UserServiceImpl userImpl;
-	private UserRepository userRepository;
+	private UserRepository userRepo;
 	private CategoryRepository categoryRepo;
 	
+<<<<<<< HEAD
 	public UserController(UserService userServ, UserRepository userRepository, CategoryRepository categoryRepo ) {
 		this.userServ = userServ;
 		this.userRepository = userRepository;
+=======
+	public UserController(UserService userServ, UserRepository userRepo, CategoryRepository categoryRepo) {
+		this.userServ = userServ;
+		this.userRepo = userRepo;
+>>>>>>> 37443fa6229374d1fe799011cc9f8268ba93e99d
 		this.categoryRepo = categoryRepo;
 	}
 	
@@ -55,6 +61,7 @@ public class UserController {
 	}
 	
 	
+<<<<<<< HEAD
 	
 	
 	@GetMapping(path = "/{username}/categories")
@@ -69,10 +76,12 @@ public class UserController {
 		return ResponseEntity.notFound().build();	
 	}
 	
+=======
+>>>>>>> 37443fa6229374d1fe799011cc9f8268ba93e99d
 
 	@GetMapping(path = "/{username}/shelves")
 	public ResponseEntity<List<Shelf>> viewUserShelves(@PathVariable("username")String username) {
-		User user = userRepository.findByUsername(username);
+		User user = userRepo.findByUsername(username);
 		if (user != null) {
 		    List<Shelf> selves = user.getShelves();
 		    if (selves != null) {

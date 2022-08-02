@@ -55,18 +55,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User addBook(String bookISBN, User user, Category category) {
-		if (user == null) {
-			return null;
-		} 
-		Shelf shelf = new Shelf(0, user, bookISBN, category);
-		List<Shelf> shelves = user.getShelves();
-		shelves.add(shelf);
-		user.setShelves(shelves);
-		
-		userRepo.save(user);
+	public Shelf addBook(Shelf shelf) {
+		shelf.setId(0);
 		shelfRepo.save(shelf);
-		return user;
+		if (shelf.getId() != 0) {
+			return shelf;
+		}
+		return null;
 	}
 
 	@Override
@@ -74,15 +69,6 @@ public class UserServiceImpl implements UserService {
 		return categoryRepo.findAll();
 	}
 
-	@Override
-	public List<Shelf> getShelfByUser(User user) {
-		return shelfRepo.findByUser(user);
-	}
-	
-	@Override
-	public List<Shelf> getShelfByUserAndCategory(User user, Category category) {
-		return shelfRepo.findByUserAndCategory(user, category);	
-	}
 
 	@Override
 	public User updateUser(User user) {
