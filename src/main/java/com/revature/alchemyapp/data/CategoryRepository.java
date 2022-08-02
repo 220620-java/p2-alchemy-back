@@ -10,7 +10,7 @@ import com.revature.alchemyapp.models.Shelf;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
-	public Category findByName(String name);
+	public Category findByCategoryName(String name);
 
 	
 }
