@@ -2,6 +2,7 @@ package com.revature.alchemyapp.models;
 
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,46 +10,62 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import io.micrometer.core.lang.Nullable;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Shelf {
-	public void setUser(User user) {
-		this.user = user;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
+	
+	@Column(name="book_isbn")
+	private String bookISBN;
+	
+	@ManyToOne
+	@JoinColumn(name="category_id", referencedColumnName = "id")
+	private Category category;
+	
+	public Shelf(Long id, User user, String bookISBN, Category category) {
+		this.id = id;
+		this.bookISBN = bookISBN;
+		this.category = category;
 	}
+	
+	
+	
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
-	@ManyToOne
-	@JoinColumn(name="user_id")
-	private User user;
-	private String bookISBN;
-	@ManyToOne
-	@JoinColumn(name="category_id")
-	private Category category;
 	
-	public Shelf(int id, User user, String bookISBN, Category category) {
-		this.id = id;
-		this.user = user;
-		this.bookISBN = bookISBN;
-		this.category = category;
-	}
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
+
+	
+	
+	
+	
 	public String getBookISBN() {
 		return bookISBN;
 	}
+
+
 	public void setBookISBN(String bookISBN) {
 		this.bookISBN = bookISBN;
 	}
+
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(bookISBN, category, id, user);
+		return Objects.hash(bookISBN, category, id);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -59,12 +76,11 @@ public class Shelf {
 		if (getClass() != obj.getClass())
 			return false;
 		Shelf other = (Shelf) obj;
-		return Objects.equals(bookISBN, other.bookISBN) && category == other.category && id == other.id
-				&& user == other.user;
+		return Objects.equals(bookISBN, other.bookISBN) && category == other.category && id == other.id;
 	}
 	@Override
 	public String toString() {
-		return "Shelf [id=" + id + ", user=" + user + ", bookISBN=" + bookISBN + ", category=" + category + "]";
+		return "Shelf [id=" + id + ", bookISBN=" + bookISBN + ", category=" + category + "]";
 	}
 	
 	

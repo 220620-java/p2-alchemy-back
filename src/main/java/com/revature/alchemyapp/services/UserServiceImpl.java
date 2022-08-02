@@ -3,6 +3,7 @@ package com.revature.alchemyapp.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revature.alchemyapp.data.CategoryRepository;
@@ -15,18 +16,14 @@ import com.revature.alchemyapp.models.User;
 
 @Service
 public class UserServiceImpl implements UserService {
-	private UserRepository userRepo;
-	private ShelfRepository shelfRepo;
-	private CategoryRepository categoryRepo;
+	@Autowired private UserRepository userRepo;
+	@Autowired private ShelfRepository shelfRepo;
+	@Autowired private CategoryRepository categoryRepo;
 	
-	public UserServiceImpl(UserRepository userRepo, ShelfRepository shelfRepo, CategoryRepository categoryRepo) {
-		this.userRepo = userRepo;
-		this.shelfRepo = shelfRepo;
-		this.categoryRepo = categoryRepo;
-	}
+	
+
 	@Override
 	public User registerUser(User user) throws UsernameAlreadyExistsException {
-		user.setId(0);
 		user = userRepo.save(user);
 		if (user.getId() == 0) {
 			throw new UsernameAlreadyExistsException();
@@ -45,7 +42,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getUser(int id) {
+	public User getUser(Long id) {
 		Optional<User> userOpt = userRepo.findById(id);
 		if (userOpt.isPresent()) {
 			return userOpt.get();
@@ -55,33 +52,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User addBook(String bookISBN, User user, int category) {
-		if (user == null) {
-			return null;
-		} 
-		Shelf shelf = new Shelf(0, user.getId(), bookISBN, category);
-		List<Shelf> shelves = user.getShelves();
-		shelves.add(shelf);
-		user.setShelves(shelves);
-		
-		userRepo.save(user);
+	public Shelf addBook(Shelf shelf) {
 		shelfRepo.save(shelf);
-		return user;
+		if(shelf.getId()!=0) {
+			return shelf;
+		}
+		return null;
 	}
 
 	@Override
 	public List<Category> getCategories() {
 		return categoryRepo.findAll();
-	}
-
-	@Override
-	public List<Shelf> getShelfByUser(User user) {
-		return shelfRepo.findByUser(user);
-	}
-	
-	@Override
-	public List<Shelf> getShelfByUserAndCategory(User user, Category category) {
-		return shelfRepo.findByUserAndCategory(user, category);	
 	}
 
 	@Override

@@ -1,5 +1,9 @@
 package com.revature.alchemyapp.controllers;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,23 +24,17 @@ import com.revature.alchemyapp.data.CategoryRepository;
 import com.revature.alchemyapp.data.UserRepository;
 
 @RestController
-@RequestMapping(path = "/users")
+@RequestMapping("/users")
 public class UserController {
-	private static final List<Shelf> Shelf = null;
-	private UserService userServ;
-	private UserServiceImpl userImpl;
-	private UserRepository userRepository;
-	private CategoryRepository categoryRepo;
+	//private static final List<Shelf> Shelf = null;
+	@Autowired private UserService userServ;
+	@Autowired private UserRepository userRepository;
+	@Autowired private CategoryRepository categoryRepo;
+
 	
-	public UserController(UserService userServ, UserRepository userRepository,CategoryRepository categoryRepo ) {
-		this.userServ = userServ;
-		this.userRepository = userRepository;
-		this.
-	}
-	
-	@GetMapping(path = "/{id}")
-	public ResponseEntity<User> getUserById(@PathVariable("id") Integer userId) {
-		User user = userServ.getUser(userId);
+	@GetMapping(path = "/id/{id}")
+	public ResponseEntity<User> getUserById(@PathVariable Long id) {
+		User user = userServ.getUser(id);
 		if (user != null) {
 			return ResponseEntity.ok(user);
 		} else {
@@ -45,13 +43,19 @@ public class UserController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<User> registerUser(@RequestBody User user) {
+	public ResponseEntity<User> registerUser(@RequestBody UserRequest userRequest) {
 		try {
+			User user = new User();
+			user.setFirstName(userRequest.getFirstName());
+			user.setLastName(userRequest.getLastName());
+			user.setPassword(userRequest.getPassword());
+			user.setShelves(new ArrayList());
+			user.setUsername(userRequest.getUsername());
 			user = userServ.registerUser(user);
+			return ResponseEntity.status(HttpStatus.CREATED).body(user);
 		} catch (UsernameAlreadyExistsException e) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
-		return ResponseEntity.status(HttpStatus.CREATED).body(user);
 	}
 	
 	
@@ -61,7 +65,7 @@ public class UserController {
 	public ResponseEntity<List<Category>> viewShelfCatagories(@PathVariable("username")String username) {
 		User user = userRepository.findByUsername(username);
 		if (user != null) {
-		    List<Category> selves = .getCategories();
+		    List<Category> selves =categoryRepo.findAll();
 		    if (selves != null) {
 		    	return ResponseEntity.ok(selves);
 		    }
@@ -83,8 +87,10 @@ public class UserController {
 	}
 
 	@PutMapping(path = "/{id}")
-	public ResponseEntity<User> updateUser(@RequestBody User user, @PathVariable("") Integer id) {
-		if (user.getId() == id) {
+	public ResponseEntity<User> updateUser(@PathVariable("") Long id) {
+		Optional<User> userOpt = userRepository.findById(id);
+		if (!userOpt.isEmpty()) {
+			User user = userOpt.get();
 			user = userServ.updateUser(user);
 			if (user != null) {
 				return ResponseEntity.ok(user);

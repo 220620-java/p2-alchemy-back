@@ -10,7 +10,6 @@ import com.revature.alchemyapp.data.ShelfRepository;
 import com.revature.alchemyapp.data.UserRepository;
 import com.revature.alchemyapp.models.Category;
 import com.revature.alchemyapp.models.Shelf;
-import com.revature.alchemyapp.models.Admin;
 import com.revature.alchemyapp.models.User;
 
 
