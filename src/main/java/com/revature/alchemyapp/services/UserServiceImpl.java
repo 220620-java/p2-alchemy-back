@@ -55,13 +55,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Shelf addBook(Shelf shelf) {
-		shelf.setId(0);
-		shelfRepo.save(shelf);
-		if (shelf.getId() != 0) {
-			return shelf;
+	public User addBook(Shelf shelf, User user) {
+		if (user == null || shelf == null) {
+			return null;
 		}
-		return null;
+		List<Shelf> shelves = user.getShelves();
+		shelves.add(shelf);
+		user.setShelves(shelves);
+		userRepo.save(user);
+		shelfRepo.save(shelf);
+		userRepo.save(user);
+		return user;
 	}
 
 	@Override

@@ -79,32 +79,5 @@ public class UserController {
 			}
 		}
 		return ResponseEntity.status(HttpStatus.CONFLICT).build();
-	}
-	//error started here 
-
-
-	
-	
-	
-	
-	
-	
-	
-	/* 
-	 * @Override
-	public List<Category> viewShelfCategories() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Shelf> viewUserBooks(User user) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	 * 
-	 * 
-	 * 
-	 * */
-
+	} 
 }
