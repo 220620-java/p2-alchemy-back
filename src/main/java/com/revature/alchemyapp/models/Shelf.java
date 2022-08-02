@@ -37,7 +37,6 @@ public class Shelf {
 	}
 	
 	
-	
 	public void setCategory(Category category) {
 		this.category = category;
 	}
@@ -48,21 +47,14 @@ public class Shelf {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	
-	
-	
-	
 	public String getBookISBN() {
 		return bookISBN;
 	}
-
-
 	public void setBookISBN(String bookISBN) {
 		this.bookISBN = bookISBN;
 	}
-
-
+	
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(bookISBN, category, id);
@@ -82,6 +74,5 @@ public class Shelf {
 	public String toString() {
 		return "Shelf [id=" + id + ", bookISBN=" + bookISBN + ", category=" + category + "]";
 	}
-	
 	
 }
