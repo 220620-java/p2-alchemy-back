@@ -1,5 +1,6 @@
 package com.revature.alchemyapp.services;
 
+import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -73,12 +74,12 @@ public class TokenServiceImpl implements TokenService {
 		return jwtConfig.getExpiration();
 	}
 	
-//	private UserDTO parseUser(Claims claims) {
-//		int id = Integer.parseInt(claims.getId());
-//		String username = claims.getSubject();
-//		Role role = new Role();
-//		role.setName(claims.get("role").toString());
-//		
-//		return new UserDTO(id, username, role, null);
-//	}
+	private UserDTO parseUser(Claims claims) {
+		int id = Integer.parseInt(claims.getId());
+		String username = claims.getSubject();
+		Role role = new Role();
+		role.setName(claims.get("role").toString());
+		
+		return new UserDTO(id, username, role, null);
+	}
 }

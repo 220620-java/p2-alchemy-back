@@ -13,6 +13,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import com.revature.alchemyapp.auth.Auth;
+import com.revature.alchemyapp.exceptions.FailedAuthenticationException;
+import com.revature.alchemyapp.exceptions.TokenExpirationException;
+import com.revature.alchemyapp.models.dtos.UserDTO;
+import com.revature.alchemyapp.services.TokenService;
+
 @Aspect
 @Component
 public class AuthAspect {
