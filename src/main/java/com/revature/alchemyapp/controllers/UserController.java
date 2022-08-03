@@ -61,7 +61,7 @@ public class UserController {
 	
 	
 	
-	@GetMapping(path = "/{username}/categories")
+	@GetMapping(path = "/username/{username}/categories")
 	public ResponseEntity<List<Category>> viewShelfCatagories(@PathVariable("username")String username) {
 		User user = userRepository.findByUsername(username);
 		if (user != null) {
@@ -74,7 +74,7 @@ public class UserController {
 	}
 	
 
-	@GetMapping(path = "/{username}/shelves")
+	@GetMapping(path = "/username/{username}/shelves")
 	public ResponseEntity<List<Shelf>> viewUserShelves(@PathVariable("username")String username) {
 		User user = userRepository.findByUsername(username);
 		if (user != null) {
@@ -85,9 +85,10 @@ public class UserController {
 	    }
 		return ResponseEntity.notFound().build();	
 	}
-
-	@PutMapping(path = "/{id}")
-	public ResponseEntity<User> updateUser(@PathVariable("") Long id) {
+	
+	
+	@PutMapping(path = "/{update}")
+	public ResponseEntity<User> updateUser(@PathVariable("update") Long id) {
 		Optional<User> userOpt = userRepository.findById(id);
 		if (!userOpt.isEmpty()) {
 			User user = userOpt.get();
@@ -100,31 +101,13 @@ public class UserController {
 		}
 		return ResponseEntity.status(HttpStatus.CONFLICT).build();
 	}
-	//error started here 
+	//	public User addBook(Shelf shelf, User user);
+	//takes in a book isbn and a category. 
+	
+	//this.id = id;
+	//this.bookISBN = bookISBN;
+	//this.category = category;
 
 
-	
-	
-	
-	
-	
-	
-	
-	/* 
-	 * @Override
-	public List<Category> viewShelfCategories() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
-	@Override
-	public List<Shelf> viewUserBooks(User user) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	 * 
-	 * 
-	 * 
-	 * */
-
-}
