@@ -2,6 +2,8 @@ package com.revature.alchemyapp.models;
 
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,36 +11,43 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Shelf {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
-	@ManyToOne
-	@JoinColumn(name="user_id")
-	private int user;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
+	@Column(name="book_isbn")
 	private String bookISBN;
-	@ManyToOne
-	@JoinColumn(name="category_id")
-	private int category;
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name="category_id", referencedColumnName = "id")
+	private Category category;
+	@Column(name="user_id")
+	private Long userId;
 	
-	public Shelf(int id, int user, String bookISBN, int category) {
-		this.id = id;
-		this.user = user;
-		this.bookISBN = bookISBN;
-		this.category = category;
+	
+	public Long getUserId() {
+		return userId;
 	}
-	public int getId() {
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
-	public int getUser() {
-		return user;
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
-	public void setUser(int user) {
-		this.user = user;
+	public Category getCategory() {
+		return category;
 	}
 	public String getBookISBN() {
 		return bookISBN;
@@ -46,15 +55,11 @@ public class Shelf {
 	public void setBookISBN(String bookISBN) {
 		this.bookISBN = bookISBN;
 	}
-	public int getCategory() {
-		return category;
-	}
-	public void setCategory(int category) {
-		this.category = category;
-	}
+
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(bookISBN, category, id, user);
+		return Objects.hash(bookISBN, category, id);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -65,12 +70,12 @@ public class Shelf {
 		if (getClass() != obj.getClass())
 			return false;
 		Shelf other = (Shelf) obj;
-		return Objects.equals(bookISBN, other.bookISBN) && category == other.category && id == other.id
-				&& user == other.user;
+
+		return Objects.equals(bookISBN, other.bookISBN) && category == other.category && id == other.id;
 	}
 	@Override
 	public String toString() {
-		return "Shelf [id=" + id + ", user=" + user + ", bookISBN=" + bookISBN + ", category=" + category + "]";
+		return "Shelf [id=" + id + ", bookISBN=" + bookISBN + ", category=" + category + "]";
 	}
 	
 	

@@ -9,9 +9,10 @@ import com.revature.alchemyapp.models.Category;
 import com.revature.alchemyapp.models.Shelf;
 import com.revature.alchemyapp.models.User;
 
-@Repository
-public interface ShelfRepository extends JpaRepository<Shelf, Integer> {
-	public List<Shelf> findByUser(User user);
-	public List<Shelf> findByBookisbn(String bookISBN);
-	public List<Shelf> findByUserAndCategory(User user, Category category);
+//@Repository
+public interface ShelfRepository extends JpaRepository<Shelf, Long> {
+	
+	List<Shelf> findByUserId(Long userId);
+	////public List<Shelf> findByBookisbn(String bookISBN);
+
 }

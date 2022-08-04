@@ -3,12 +3,15 @@ package com.revature.alchemyapp.models;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -17,8 +20,8 @@ import javax.persistence.Table;
 @Table(name="person") // Explicitly tells the ORM the name of the corresponding table in the database if it is different.
 public class User {
 	@Id // Specifies the Java field that corresponds to the database primary key
-	@GeneratedValue(strategy = GenerationType.AUTO) // Specifies that this property is automatically generated in the database via serial
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Specifies that this property is automatically generated in the database via serial
+	private Long id;
 	private String username;
 	@Column(name="passwrd") // Does the same thing as @Table but with columns
 	private String password;
@@ -29,10 +32,11 @@ public class User {
 	@OneToMany 
 	@JoinColumn(name="user_id")
 	private List<Shelf> shelves;
-	public int getId() {
+	
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getUsername() {
