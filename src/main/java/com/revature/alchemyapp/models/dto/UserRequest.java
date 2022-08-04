@@ -1,4 +1,4 @@
-package com.revature.alchemyapp.controllers;
+package com.revature.alchemyapp.models.dto;
 
 import java.util.List;
 
@@ -12,10 +12,11 @@ import lombok.Data;
 
 @Data
 public class UserRequest {
-	@JsonProperty String password;
+
+	@JsonProperty private String username;
+	@JsonProperty private String password;
 	@JsonProperty private String firstName;
 	@JsonProperty private String lastName;
-	@JsonProperty private String username;
 	
 	
 	public String getUsername() {

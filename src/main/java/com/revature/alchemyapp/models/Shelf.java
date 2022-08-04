@@ -2,6 +2,7 @@ package com.revature.alchemyapp.models;
 
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import io.micrometer.core.lang.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -18,27 +18,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Shelf {
-
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	
 	@Column(name="book_isbn")
 	private String bookISBN;
-	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="category_id", referencedColumnName = "id")
 	private Category category;
-	
-	public Shelf(Long id, User user, String bookISBN, Category category) {
-		this.id = id;
-		this.bookISBN = bookISBN;
-		this.category = category;
-	}
+	@Column(name="user_id")
+	private Long userId;
 	
 	
-	public void setCategory(Category category) {
-		this.category = category;
+	public Long getUserId() {
+		return userId;
 	}
 	
 	public Long getId() {
@@ -47,6 +40,15 @@ public class Shelf {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+	public Category getCategory() {
+		return category;
+	}
+	
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+	
 	public String getBookISBN() {
 		return bookISBN;
 	}
@@ -68,6 +70,7 @@ public class Shelf {
 		if (getClass() != obj.getClass())
 			return false;
 		Shelf other = (Shelf) obj;
+
 		return Objects.equals(bookISBN, other.bookISBN) && category == other.category && id == other.id;
 	}
 	@Override

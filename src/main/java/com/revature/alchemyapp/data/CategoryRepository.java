@@ -8,7 +8,8 @@ import org.springframework.stereotype.Repository;
 import com.revature.alchemyapp.models.Category;
 import com.revature.alchemyapp.models.Shelf;
 
+
 //@Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
-	List<Category> findByCategoryName(String categoryName);
+	Category findByCategoryName(String categoryName);
 }

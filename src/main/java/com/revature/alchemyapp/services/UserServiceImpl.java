@@ -3,7 +3,8 @@ package com.revature.alchemyapp.services;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import com.revature.alchemyapp.data.CategoryRepository;
@@ -16,14 +17,18 @@ import com.revature.alchemyapp.models.User;
 
 @Service
 public class UserServiceImpl implements UserService {
-	@Autowired private UserRepository userRepo;
-	@Autowired private ShelfRepository shelfRepo;
-	@Autowired private CategoryRepository categoryRepo;
+	private UserRepository userRepo;
+	private ShelfRepository shelfRepo;
+	private CategoryRepository categoryRepo;
 	
-	
-
+	public UserServiceImpl(UserRepository userRepo, ShelfRepository shelfRepo, CategoryRepository categoryRepo) {
+		this.userRepo = userRepo;
+		this.shelfRepo = shelfRepo;
+		this.categoryRepo = categoryRepo;
+	}
 	@Override
 	public User registerUser(User user) throws UsernameAlreadyExistsException {
+		user.setId((long) 0);
 		user = userRepo.save(user);
 		if (user.getId() == 0) {
 			throw new UsernameAlreadyExistsException();
@@ -52,18 +57,24 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Shelf addBook(Shelf shelf) {
-		shelfRepo.save(shelf);
-		if(shelf.getId()!=0) {
-			return shelf;
+	@Transactional
+	public User addBook(Shelf shelf, User user) {
+		if (user == null || shelf == null) {
+			return null;
 		}
-		return null;
+		List<Shelf> shelves = user.getShelves();
+		shelves.add(shelf);
+		user.setShelves(shelves);
+		userRepo.save(user);
+		shelfRepo.save(shelf);
+		return user;
 	}
 
 	@Override
 	public List<Category> getCategories() {
 		return categoryRepo.findAll();
 	}
+
 
 	@Override
 	public User updateUser(User user) {
