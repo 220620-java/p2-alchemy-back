@@ -10,7 +10,7 @@ import com.revature.alchemyapp.models.User;
 public interface UserService {
 	public User registerUser(User user) throws UsernameAlreadyExistsException;
 	public User logIn(String username, String password);
-	public User getUser(int id);
+	public User getUser(Long id);
 	public User addBook(Shelf shelf, User user);
 	public List<Category> getCategories();
 	public User updateUser(User user);

@@ -2,6 +2,7 @@ package com.revature.alchemyapp.models;
 
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,28 +11,36 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Shelf {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
 	@Column(name="book_isbn")
-	private String book;
-	@ManyToOne
-	@JoinColumn(name="category_id")
+	private String bookISBN;
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name="category_id", referencedColumnName = "id")
 	private Category category;
+	@Column(name="user_id")
+	private Long userId;
 	
-	public int getId() {
+	
+	public Long getUserId() {
+		return userId;
+	}
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
-	}
-	public String getBook() {
-		return book;
-	}
-	public void setBook(String book) {
-		this.book = book;
 	}
 
 	public void setCategory(Category category) {
@@ -40,9 +49,17 @@ public class Shelf {
 	public Category getCategory() {
 		return category;
 	}
+	public String getBookISBN() {
+		return bookISBN;
+	}
+	public void setBookISBN(String bookISBN) {
+		this.bookISBN = bookISBN;
+	}
+
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(book, category, id);
+		return Objects.hash(bookISBN, category, id);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -53,11 +70,12 @@ public class Shelf {
 		if (getClass() != obj.getClass())
 			return false;
 		Shelf other = (Shelf) obj;
-		return Objects.equals(book, other.book) && category == other.category && id == other.id;
+
+		return Objects.equals(bookISBN, other.bookISBN) && category == other.category && id == other.id;
 	}
 	@Override
 	public String toString() {
-		return "Shelf [id=" + id + ", bookISBN=" + book + ", category=" + category + "]";
+		return "Shelf [id=" + id + ", bookISBN=" + bookISBN + ", category=" + category + "]";
 	}
 	
 	

@@ -3,6 +3,8 @@ package com.revature.alchemyapp.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import com.revature.alchemyapp.data.CategoryRepository;
@@ -26,7 +28,7 @@ public class UserServiceImpl implements UserService {
 	}
 	@Override
 	public User registerUser(User user) throws UsernameAlreadyExistsException {
-		user.setId(0);
+		user.setId((long) 0);
 		user = userRepo.save(user);
 		if (user.getId() == 0) {
 			throw new UsernameAlreadyExistsException();
@@ -45,7 +47,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getUser(int id) {
+	public User getUser(Long id) {
 		Optional<User> userOpt = userRepo.findById(id);
 		if (userOpt.isPresent()) {
 			return userOpt.get();
@@ -55,6 +57,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public User addBook(Shelf shelf, User user) {
 		if (user == null || shelf == null) {
 			return null;
@@ -64,7 +67,6 @@ public class UserServiceImpl implements UserService {
 		user.setShelves(shelves);
 		userRepo.save(user);
 		shelfRepo.save(shelf);
-		userRepo.save(user);
 		return user;
 	}
 
