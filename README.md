@@ -46,8 +46,11 @@ create table category(
 ### Data
 * JPA Repository
 * Category Repository
+	* Category findByCategoryName(String categoryName)
 * Shelf Repository
+	* List<Shelf> findByUserId(Long Id)
 * User Repository
+	* User findByUsername(String username)
 ### Services
 * Shelf Service
   * Shelf createShelf(Shelf shelf)
