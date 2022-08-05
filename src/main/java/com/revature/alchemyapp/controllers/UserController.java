@@ -1,6 +1,7 @@
 package com.revature.alchemyapp.controllers;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +48,17 @@ public class UserController {
 		} else {
 			return ResponseEntity.notFound().build();
 		}
+	}
+	
+	@GetMapping(path="/login")
+	public ResponseEntity<User> login(@RequestBody Map<String, String> credentials) {
+		String username = credentials.get("username");
+		String password = credentials.get("password");
+		User user = userServ.logIn(username, password);
+		if(user != null) {
+			return ResponseEntity.ok(user);
+		}
+		return ResponseEntity.notFound().build();
 	}
 	
 	@PostMapping
