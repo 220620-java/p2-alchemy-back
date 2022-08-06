@@ -43,7 +43,7 @@ public class ShelfController {
 	}
 
 	@GetMapping(path = "/all")
-	public ResponseEntity<List<Shelf>> getShelves(@PathVariable("id") Long shelfId) {
+	public ResponseEntity<List<Shelf>> getShelves() {
 		List<Shelf> shelf = shelfServ.getAllShelves();
 		if (shelf != null) {
 			return ResponseEntity.ok(shelf);

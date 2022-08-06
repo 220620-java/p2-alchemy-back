@@ -11,6 +11,8 @@ public class ShelfRequest {
 	private Long category;
 	@JsonProperty
 	private String book;
+	@JsonProperty
+	private String bookCover;
 	public Long getCategory() {
 		return category;
 	}
@@ -22,6 +24,12 @@ public class ShelfRequest {
 	}
 	public void setBook(String book) {
 		this.book = book;
+	}
+	public String getBookCover() {
+		return bookCover;
+	}
+	public void setBookCover(String bookCover) {
+		this.bookCover = bookCover;
 	}
 
 	

@@ -1,6 +1,8 @@
 package com.revature.alchemyapp.controllers;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +19,7 @@ import com.revature.alchemyapp.data.UserRepository;
 import com.revature.alchemyapp.exceptions.UsernameAlreadyExistsException;
 import com.revature.alchemyapp.models.Shelf;
 import com.revature.alchemyapp.models.User;
-import com.revature.alchemyapp.models.dto.UserRequest;
+import com.revature.alchemyapp.models.dto.UserDTO;
 import com.revature.alchemyapp.services.ShelfService;
 import com.revature.alchemyapp.services.UserService;
 import com.revature.alchemyapp.services.UserServiceImpl;
@@ -49,15 +51,27 @@ public class UserController {
 		}
 	}
 	
+	@PostMapping(path="/login")
+	public ResponseEntity<UserDTO> login(@RequestBody Map<String, String> credentials) {
+		String username = credentials.get("username");
+		String password = credentials.get("password");
+		User user = userServ.logIn(username, password);
+		if(user != null) {
+			UserDTO userDto = new UserDTO(user);
+			return ResponseEntity.status(200).body(userDto);
+		}
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	}
+	
 	@PostMapping
-    public ResponseEntity<User> registerUser(@RequestBody UserRequest userRequest) {
+    public ResponseEntity<User> registerUser(@RequestBody Map<String, String> credentials) {
         try {
             User user = new User();
-            user.setFirstName(userRequest.getFirstName());
-            user.setLastName(userRequest.getLastName());
-            user.setPassword(userRequest.getPassword());
+            user.setUsername(credentials.get("username"));
+            user.setPassword(credentials.get("password"));
+            user.setFirstName(credentials.get("firstname"));
+            user.setLastName(credentials.get("lastname"));
             user.setShelves(new ArrayList());
-            user.setUsername(userRequest.getUsername());
             user = userServ.registerUser(user);
             return ResponseEntity.status(HttpStatus.CREATED).body(user);
         } catch (UsernameAlreadyExistsException e) {
@@ -66,21 +80,21 @@ public class UserController {
     }
 
 
-	@GetMapping(path = "/{username}/shelves")
-	public ResponseEntity<List<Shelf>> viewUserShelves(@PathVariable("username")String username) {
-		User user = userRepo.findByUsername(username);
+	@GetMapping(path = "/{id}/shelves")
+	public ResponseEntity<List<Shelf>> viewUserShelves(@PathVariable("id")Long id) {
+		Optional<User> user = userRepo.findById(id);
 		if (user != null) {
-		    List<Shelf> selves = user.getShelves();
-		    if (selves != null) {
-		    	return ResponseEntity.ok(selves);
+		    List<Shelf> shelves = user.get().getShelves();
+		    if (shelves != null) {
+		    	return ResponseEntity.ok(shelves);
 		    }
 	    }
 		return ResponseEntity.notFound().build();	
 	}
 	
-	@PutMapping(path = "/{userId}/addbook/{shelfId}")
-	public ResponseEntity<User> addShelf(@PathVariable("userId") Long userId, @PathVariable("shelfId") Long shelfId) {
-		User user = userServ.getUser(userId);
+	@PutMapping(path = "/{id}/addbook/{shelfId}")
+	public ResponseEntity<User> addShelf(@PathVariable("userId") Long id, @PathVariable("shelfId") Long shelfId) {
+		User user = userServ.getUser(id);
 		Shelf shelf = shelfServ.getShelf(shelfId);
 		if (shelf != null && user != null) {
 			user = userServ.addBook(shelf, user);
