@@ -28,6 +28,8 @@ public class Shelf {
 	private Category category;
 	@Column(name="user_id")
 	private Long userId;
+	@Column(name="book_cover")
+	private String bookCover;
 	
 	
 	public Long getUserId() {
@@ -76,6 +78,12 @@ public class Shelf {
 	@Override
 	public String toString() {
 		return "Shelf [id=" + id + ", bookISBN=" + bookISBN + ", category=" + category + "]";
+	}
+	public String getBookCover() {
+		return bookCover;
+	}
+	public void setBookCover(String bookCover) {
+		this.bookCover = bookCover;
 	}
 	
 	
