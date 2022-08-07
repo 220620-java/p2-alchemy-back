@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.revature.alchemyapp.data.ShelfRepository;
 import com.revature.alchemyapp.models.Shelf;
-import com.revature.alchemyapp.models.User;
 
 @Service
 public class ShelfServiceImpl implements ShelfService{
@@ -19,7 +18,6 @@ public class ShelfServiceImpl implements ShelfService{
 
 	@Override
 	public Shelf createShelf(Shelf shelf) {
-		shelf.setId((long) 0);
 		shelf = shelfRepo.save(shelf);
 		return shelf;
 	}
