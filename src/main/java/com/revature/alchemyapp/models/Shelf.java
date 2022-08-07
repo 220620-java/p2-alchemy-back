@@ -31,7 +31,6 @@ public class Shelf {
 	@Column(name="book_cover")
 	private String bookCover;
 	
-	
 	public Long getUserId() {
 		return userId;
 	}
