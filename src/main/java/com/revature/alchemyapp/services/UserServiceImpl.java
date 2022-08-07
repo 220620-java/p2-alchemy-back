@@ -27,6 +27,11 @@ public class UserServiceImpl implements UserService {
 		this.categoryRepo = categoryRepo;
 	}
 	@Override
+	public List<User> getAllUsers() {
+		List<User> users = userRepo.findAll();
+		return users;
+	}
+	@Override
 	public User registerUser(User user) throws UsernameAlreadyExistsException {
 		user.setId((long) 0);
 		user = userRepo.save(user);
@@ -38,9 +43,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User logIn(String username, String password) {
-		User user = userRepo.findByUsername(username);
-		if (user != null && (password != null && password.equals(user.getPassword()))) {
-			return user;
+		Optional<User> user = userRepo.findByUsername(username);
+		if (user.isPresent() && (password != null && password.equals(user.get().getPassword()))) {
+			return user.get();
 		} else {
 			return null;
 		}

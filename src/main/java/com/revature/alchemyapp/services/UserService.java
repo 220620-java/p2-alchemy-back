@@ -14,5 +14,5 @@ public interface UserService {
 	public User addBook(Shelf shelf, User user);
 	public List<Category> getCategories();
 	public User updateUser(User user);
-	
+	public List<User> getAllUsers();
 }
