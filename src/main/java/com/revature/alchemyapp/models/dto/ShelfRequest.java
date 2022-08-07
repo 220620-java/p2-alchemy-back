@@ -31,6 +31,4 @@ public class ShelfRequest {
 	public void setBookCover(String bookCover) {
 		this.bookCover = bookCover;
 	}
-
-	
 }

@@ -33,6 +33,7 @@ public class ShelfController {
 	public ResponseEntity<Shelf> addShelf(@RequestBody Map<String, String> book) {
 		Shelf shelf = new Shelf();
 		shelf.setBookISBN(book.get("book"));
+		shelf.setBookCover(book.get("bookCover"));
 		Category category = categoryServ.getCategoryByName(book.get("category"));
 		shelf.setCategory(category);
 		shelfServ.createShelf(shelf);
