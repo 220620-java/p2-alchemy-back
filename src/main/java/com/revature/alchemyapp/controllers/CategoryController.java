@@ -7,27 +7,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.revature.alchemyapp.data.CategoryRepository;
 import com.revature.alchemyapp.models.Category;
-import com.revature.alchemyapp.services.ShelfService;
-import com.revature.alchemyapp.services.UserService;
+import com.revature.alchemyapp.services.CategoryService;
 
 @RestController // Automatically puts @ResponseBody over all of our methods
 @RequestMapping(path = "/category")
 public class CategoryController {
-	private ShelfService shelfServ;
-	private UserService userServ;
-	private CategoryRepository categoryRepo;
+	private CategoryService categoryServ;
 	
-	public CategoryController(ShelfService shelfServ, UserService userServ, CategoryRepository categoryRepo) {
-		this.shelfServ=shelfServ;
-		this.userServ=userServ;
-		this.categoryRepo=categoryRepo;
+	public CategoryController(CategoryService categoryServ) {
+		this.categoryServ=categoryServ;
 	}
 	
 	@GetMapping(path = "/all")
 	public ResponseEntity<List<Category>> getCategories() {
-		List<Category> category = categoryRepo.findAll();
+		List<Category> category = categoryServ.getAllCategories();
 		if (category != null) {
 			return ResponseEntity.ok(category);
 		} else {

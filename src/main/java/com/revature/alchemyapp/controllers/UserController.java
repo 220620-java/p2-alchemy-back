@@ -29,15 +29,10 @@ import com.revature.alchemyapp.services.UserServiceImpl;
 public class UserController {
 	private static final List<Shelf> Shelf = null;
 	private UserService userServ;
-	private UserServiceImpl userImpl;
-	private UserRepository userRepo;
-	private CategoryRepository categoryRepo;
 	private ShelfService shelfServ;
 	
-	public UserController(UserService userServ, UserRepository userRepo, CategoryRepository categoryRepo, ShelfService shelfServ) {
+	public UserController(UserService userServ, ShelfService shelfServ) {
 		this.userServ = userServ;
-		this.userRepo = userRepo;
-		this.categoryRepo = categoryRepo;
 		this.shelfServ = shelfServ;
 	}
 	
@@ -82,9 +77,9 @@ public class UserController {
 
 	@GetMapping(path = "/{id}/shelves")
 	public ResponseEntity<List<Shelf>> viewUserShelves(@PathVariable("id")Long id) {
-		Optional<User> user = userRepo.findById(id);
+		User user = userServ.getUser(id);
 		if (user != null) {
-		    List<Shelf> shelves = user.get().getShelves();
+		    List<Shelf> shelves = user.getShelves();
 		    if (shelves != null) {
 		    	return ResponseEntity.ok(shelves);
 		    }
@@ -93,7 +88,7 @@ public class UserController {
 	}
 	
 	@PutMapping(path = "/{id}/addbook/{shelfId}")
-	public ResponseEntity<User> addShelf(@PathVariable("userId") Long id, @PathVariable("shelfId") Long shelfId) {
+	public ResponseEntity<User> addShelf(@PathVariable("id") Long id, @PathVariable("shelfId") Long shelfId) {
 		User user = userServ.getUser(id);
 		Shelf shelf = shelfServ.getShelf(shelfId);
 		if (shelf != null && user != null) {

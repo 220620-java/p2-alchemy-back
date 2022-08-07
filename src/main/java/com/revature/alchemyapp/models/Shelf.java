@@ -15,8 +15,8 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
+//@AllArgsConstructor
+//@NoArgsConstructor
 public class Shelf {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
