@@ -79,6 +79,7 @@ create table category(
 * Spring Boot
 * Junit
 * lombok
+* HTML, CSS, JavaScript
 
 
   
