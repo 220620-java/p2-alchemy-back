@@ -71,5 +71,14 @@ create table category(
   * User addBook(Shelf shelf, User user)
   * List<Category> getCategories()
   * User updateUser(User user)
+  
+### Full Stack
+* Java 8
+* Spring Web
+* Spring Data JPA
+* Spring Boot
+* Junit
+* lombok
+
 
   
