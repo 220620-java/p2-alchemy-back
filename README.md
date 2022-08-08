@@ -34,6 +34,8 @@ create table category(
 * Shelf
 * User
 ### Controllers
+* @RequestMapping(path="/category") CategoryController
+  * @GetMapping(path = "/all") ResponseEntity<List<Category>> getCategories()
 * @RequestMapping(path="/shelf") ShelfController
   * @PostMapping ResponseEntity<Shelf> addShelf(@RequestBody ShelfRequest shelfRequest)
   * @GetMapping(path = "/all") ResponseEntity<List<Shelf>> getShelves(@PathVariable("id") Long shelfId)
@@ -52,17 +54,22 @@ create table category(
 * User Repository
 	* User findByUsername(String username)
 ### Services
+* Category Service
+  * public Category createCategory(Category category);
+  * public Category getCategory(Long id);
+  * public Category getCategoryByName(String name);
+  * public List<Category> getAllCategories();
 * Shelf Service
   * Shelf createShelf(Shelf shelf)
-	* Shelf getShelf(Long id)
-	* List<Shelf> getAllShelves()
-	* Shelf updateShelf(Shelf shelf)
+  * Shelf getShelf(Long id)
+  * List<Shelf> getAllShelves()
+  * Shelf updateShelf(Shelf shelf)
 * User Service
   * User registerUser(User user)
-	* User logIn(String username, String password)
-	* User getUser(Long id)
-	* User addBook(Shelf shelf, User user)
-	* List<Category> getCategories()
-	* User updateUser(User user)
+  * User logIn(String username, String password)
+  * User getUser(Long id)
+  * User addBook(Shelf shelf, User user)
+  * List<Category> getCategories()
+  * User updateUser(User user)
 
   
